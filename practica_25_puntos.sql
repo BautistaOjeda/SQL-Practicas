@@ -36,7 +36,7 @@ SELECT DISTINCT
 FROM
     empleado;
 
--- PUNTO 7  (SQLite no tiene CONCAT → usar ||)
+-- PUNTO 7  
 SELECT
     nombre || ' ' || apellido1 || ' ' || apellido2 AS NOMBRECOMPLETO
 FROM
@@ -54,7 +54,7 @@ SELECT
 FROM
     empleado;
 
--- PUNTO 10 (último carácter con substr(..., -1))
+-- PUNTO 10 
 SELECT 
     id,
     dni,
@@ -103,7 +103,7 @@ ORDER BY
     presupuesto DESC
 LIMIT 3;
 
--- PUNTO 16 (CORREGIDO: JOIN por clave foránea, no por id=id)
+-- PUNTO 16 
 SELECT 
     e.nombre || ' ' || e.apellido1 || ' ' || e.id AS NombreApellidoID,
     d.presupuesto,
@@ -131,7 +131,7 @@ ORDER BY
     e.apellido2 ASC, 
     e.nombre ASC;
 
--- PUNTO 18 (CORREGIDO: DISTINCT para no repetir departamentos con varios empleados)
+-- PUNTO 18 
 SELECT DISTINCT
     d.id AS identificadordepartamento,
     d.nombre AS nombredeldepartamento
@@ -187,8 +187,6 @@ LEFT JOIN empleado e
     ON d.id = e.id_departamento
 WHERE e.id IS NULL;
 
--- (PUNTO 23 no provisto en tu lista original)
-
 -- PUNTO 24
 SELECT
     e.nombre || ' ' || e.apellido1 AS NomyApe
@@ -197,7 +195,7 @@ INNER JOIN departamento d
     ON e.id_departamento = d.id
 WHERE d.presupuesto NOT BETWEEN 100000 AND 200000;
 
--- PUNTO 25 (si tu columna se llama NIF, reemplazá e.dni por e.nif)
+-- PUNTO 25 
 SELECT
     e.nombre || ' ' || e.apellido1 AS NomyApe,
     e.dni,
@@ -206,3 +204,4 @@ FROM empleado e
 INNER JOIN departamento d
     ON e.id_departamento = d.id
 WHERE e.dni = '38382980M';
+
