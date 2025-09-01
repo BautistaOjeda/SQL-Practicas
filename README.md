@@ -1,1 +1,1 @@
-Este proyecto contiene consultas SQL para practicar joins y filtros en una base
+Ejercicios de SQL (25 puntos) sobre empleados y departamentos. Incluye consultas con SELECT, JOIN, ORDER BY, BETWEEN, etc.
