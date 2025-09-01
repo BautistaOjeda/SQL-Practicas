@@ -1,134 +1,119 @@
---PUNTO1
-
+-- PUNTO 1
 SELECT
     apellido1
-from
+FROM
     empleado;
-    
---PUNTO2
 
-Select distinct
-     apellido1
-from
+-- PUNTO 2
+SELECT DISTINCT
+    apellido1
+FROM
     empleado;
-    
---PUNTO3
 
-Select
+-- PUNTO 3
+SELECT
     *
-from
+FROM
     empleado;
 
---PUNTO4
-
-select
+-- PUNTO 4
+SELECT
     nombre,
     apellido1,
     apellido2
-from
+FROM
     empleado;
-    
---PUNTO5
 
-select
+-- PUNTO 5
+SELECT
     id_departamento
-from
+FROM
     empleado;
-    
---PUNTO6
 
-select distinct
+-- PUNTO 6
+SELECT DISTINCT
     id_departamento
-from
+FROM
     empleado;
-    
---PUNTO7
 
-Select
-    Concat(nombre, ' ', apellido1, ' ', apellido2) as NOMBRECOMPLETO
+-- PUNTO 7  (SQLite no tiene CONCAT → usar ||)
+SELECT
+    nombre || ' ' || apellido1 || ' ' || apellido2 AS NOMBRECOMPLETO
 FROM
-    EMPLEADO;
-    
---PUNTO8
+    empleado;
 
-Select
-    upper(Concat(nombre, ' ', apellido1, ' ', apellido2)) as NOMBRECOMPLETO
+-- PUNTO 8
+SELECT
+    UPPER(nombre || ' ' || apellido1 || ' ' || apellido2) AS NOMBRECOMPLETO
 FROM
-    EMPLEADO;
-    
---PUNTO9
+    empleado;
 
-Select
-    lower(Concat(nombre, ' ', apellido1, ' ', apellido2)) as NOMBRECOMPLETO
+-- PUNTO 9
+SELECT
+    LOWER(nombre || ' ' || apellido1 || ' ' || apellido2) AS NOMBRECOMPLETO
 FROM
-    EMPLEADO;
-    
---PUNTO10
+    empleado;
 
+-- PUNTO 10 (último carácter con substr(..., -1))
 SELECT 
     id,
     dni,
-    substr(dni, 1, length(dni)-1) AS digitos_dni,
-    substr(dni, length(dni), 1) AS letra_dni
+    substr(dni, 1, length(dni) - 1) AS digitos_dni,
+    substr(dni, -1)                 AS letra_dni
 FROM empleado;
 
---PUNTO11
-
+-- PUNTO 11
 SELECT 
     nombre,
     presupuesto
-from
+FROM
     departamento
-order by presupuesto asc;
+ORDER BY presupuesto ASC;
 
---PUNTO12
-
-Select
+-- PUNTO 12
+SELECT
     nombre
-from 
+FROM 
     departamento
-order by nombre asc;
+ORDER BY nombre ASC;
 
---PUNTO13
-
-Select
+-- PUNTO 13
+SELECT
     nombre
-from 
+FROM 
     departamento
-order by nombre desc;
+ORDER BY nombre DESC;
 
---PUNTO14
-
-select
+-- PUNTO 14
+SELECT
     nombre,
     apellido1,
     apellido2
-from
+FROM
     empleado
-order by apellido1 asc, apellido2 asc, nombre asc;
+ORDER BY apellido1 ASC, apellido2 ASC, nombre ASC;
 
---PUNTO15
-
-select
+-- PUNTO 15
+SELECT
     nombre,
     presupuesto
-from
+FROM
     departamento
-order by 
-    presupuesto desc
-    limit 3;
+ORDER BY 
+    presupuesto DESC
+LIMIT 3;
 
---PUNTO 16
+-- PUNTO 16 (CORREGIDO: JOIN por clave foránea, no por id=id)
+SELECT 
+    e.nombre || ' ' || e.apellido1 || ' ' || e.id AS NombreApellidoID,
+    d.presupuesto,
+    d.id,
+    d.nombre AS NombreDepartamento
+FROM empleado e
+INNER JOIN departamento d
+    ON e.id_departamento = d.id;
 
-select 
-    concat(e.nombre, e.apellido1,' ',e.id) as NombreApellidoID,
-    d.presupuesto, d.id, concat(d.nombre) as Nombredepartamento
-from empleado e
-inner join departamento d
-    on e.id=d.id;
-    
---PUNTO 17
-
+-- PUNTO 17
 SELECT 
     e.nombre, 
     e.apellido1, 
@@ -145,18 +130,16 @@ ORDER BY
     e.apellido1 ASC, 
     e.apellido2 ASC, 
     e.nombre ASC;
-    
---PUNTO 18
 
-SELECT 
-    d.id as identificadordepartamento,
-    d.nombre as nombredeldepartamento
-from departamento d
-inner join empleado e
-    on d.id = e.id_departamento;
-    
---PUNTO 19
+-- PUNTO 18 (CORREGIDO: DISTINCT para no repetir departamentos con varios empleados)
+SELECT DISTINCT
+    d.id AS identificadordepartamento,
+    d.nombre AS nombredeldepartamento
+FROM departamento d
+INNER JOIN empleado e
+    ON d.id = e.id_departamento;
 
+-- PUNTO 19
 SELECT 
     d.nombre AS nombre_departamento
 FROM empleado e
@@ -165,23 +148,21 @@ INNER JOIN departamento d
 WHERE e.nombre = 'Pepe'
   AND e.apellido1 = 'Ruiz'
   AND e.apellido2 = 'Santana';
-  
---PUNTO 20
 
-select
-    concat(e.nombre,' ',e.apellido1,' ',e.apellido2) as Nombrecompleto
-from empleado e
-inner join departamento d
-    on e.id_departamento = d.id
+-- PUNTO 20
+SELECT
+    e.nombre || ' ' || e.apellido1 || ' ' || e.apellido2 AS NombreCompleto
+FROM empleado e
+INNER JOIN departamento d
+    ON e.id_departamento = d.id
 WHERE d.nombre IN ('Sistemas', 'Contabilidad', 'I+D')
-order by
+ORDER BY
     d.nombre ASC, 
     e.apellido1 ASC, 
     e.apellido2 ASC, 
     e.nombre ASC;
-    
---PUNTO 21 
 
+-- PUNTO 21
 SELECT 
     e.id AS id_empleado,
     e.nombre, 
@@ -195,8 +176,7 @@ FROM empleado e
 LEFT JOIN departamento d
     ON e.id_departamento = d.id;
 
---PUNTO22
-
+-- PUNTO 22
 SELECT 
     d.id AS id_departamento,
     d.nombre AS nombre_departamento,
@@ -207,22 +187,22 @@ LEFT JOIN empleado e
     ON d.id = e.id_departamento
 WHERE e.id IS NULL;
 
---PUNTO24
+-- (PUNTO 23 no provisto en tu lista original)
 
+-- PUNTO 24
 SELECT
-    CONCAT(e.nombre, ' ', e.apellido1) AS NomyApe
+    e.nombre || ' ' || e.apellido1 AS NomyApe
 FROM empleado e
 INNER JOIN departamento d
     ON e.id_departamento = d.id
 WHERE d.presupuesto NOT BETWEEN 100000 AND 200000;
 
---PUNTO25
-
+-- PUNTO 25 (si tu columna se llama NIF, reemplazá e.dni por e.nif)
 SELECT
-    concat(e.nombre, ' ', apellido1) as NomyApe,
+    e.nombre || ' ' || e.apellido1 AS NomyApe,
     e.dni,
-    d.nombre
-from empleado e
+    d.nombre AS nombre_departamento
+FROM empleado e
 INNER JOIN departamento d
     ON e.id_departamento = d.id
-where e.dni = '38382980M';
+WHERE e.dni = '38382980M';
